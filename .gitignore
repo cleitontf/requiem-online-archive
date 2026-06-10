@@ -1,0 +1,8 @@
+*.Zone.Identifier
+__pycache__/
+*.pyc
+.claude/
+
+# Raw game data dumps used to generate template/js/*.js (not needed to run the site)
+TEMP_*/
+all_csv/
