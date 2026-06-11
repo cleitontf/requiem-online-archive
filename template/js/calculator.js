@@ -2,6 +2,7 @@
 var SKILLS_DATA = (typeof SKILLS_DATA !== 'undefined') ? SKILLS_DATA : null;
 
 var Calculator_box = {
+	page_path: window.location.pathname,
 	avatar_clas: 0,
 	avatar_level: 1,
 	level_points_array: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 109],
@@ -149,7 +150,7 @@ var Calculator_box = {
 	},
 
 	reset: function() {
-		window.location.href = window.location.pathname;
+		window.location.href = this.page_path;
 	},
 
 	copy_link: function() {
@@ -447,7 +448,7 @@ var Calculator_box = {
 	skill_format: function() {
 		$('#char_build').val(this.skills_array.join());
 		if (this.avatar_level > 0)
-			history.replaceState(null, '', '#' + this.avatar_level + '-' + this.skills_array.join(','));
+			history.replaceState(null, '', this.page_path + '#' + this.avatar_level + '-' + this.skills_array.join(','));
 	},
 };
 

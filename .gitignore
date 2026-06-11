@@ -6,3 +6,7 @@ __pycache__/
 # Raw game data dumps used to generate template/js/*.js (not needed to run the site)
 TEMP_*/
 all_csv/
+
+# Raw game texture sources (only the converted .png icons are committed)
+*.dds
+*.tga

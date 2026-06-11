@@ -15,7 +15,7 @@ SKILLS_DATA = 'template/js/skills_data.json'
 SKILLS_DATA_JS = 'template/js/skills_data.js'
 
 ARROW_DIM = {1: (64, 32), 2: (16, 32), 3: (16, 16), 4: (32, 64), 5: (32, 16),
-              6: (16, 16), 7: (16, 32), 8: (64, 32), 9: (32, 128)}
+              6: (16, 16), 7: (16, 32), 8: (64, 32), 9: (32, 128), 10: (32, 96)}
 
 CSS = open(ROOT_CSS).read()
 MATCH_THRESHOLD = 25  # px, distancia maxima entre seta esperada e seta real
@@ -24,6 +24,9 @@ MATCH_THRESHOLD = 25  # px, distancia maxima entre seta esperada e seta real
 def get_grid(cls):
     html = open(f'calculator/{cls}/index.html').read()
     table = re.search(r'<table class="calculator_skills_sheet">(.*?)</table>', html, re.S).group(1)
+    # A secao DNA fica em linhas separadas, sem setas de pre-requisito;
+    # ignora-las evita casamentos espurios com setas da grade de skills.
+    table = table.split('<td colspan="7">')[0]
     grid = {}
     for r_idx, row in enumerate(re.findall(r'<tr>(.*?)</tr>', table, re.S)):
         for c_idx, cell in enumerate(re.findall(r'<td class="skill_info_"[^>]*>(.*?)</td>', row, re.S)):
