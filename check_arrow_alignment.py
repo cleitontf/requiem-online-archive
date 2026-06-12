@@ -1,4 +1,8 @@
+import argparse
 import json
+import os
+
+ROOT = os.path.dirname(os.path.abspath(__file__))
 
 ASSET_BBOX = {
     1: (0, 0, 59, 17),
@@ -14,8 +18,13 @@ ASSET_BBOX = {
 
 THRESHOLD = 2  # px
 
-data = json.load(open('template/js/skills_data.json'))
-dump = json.load(open('/tmp/shotjob/grid_dump.json'))
+parser = argparse.ArgumentParser(
+    description='Verifica o alinhamento das setas do calculator contra os ícones conectados.')
+parser.add_argument('grid_dump', help='JSON com as bounding boxes dos ícones/setas (gerado via Playwright)')
+args = parser.parse_args()
+
+data = json.load(open(os.path.join(ROOT, 'template', 'js', 'skills_data.json')))
+dump = json.load(open(args.grid_dump))
 
 for cls, skills in data.items():
     if cls not in dump:

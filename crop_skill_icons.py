@@ -3,7 +3,8 @@ import os
 from PIL import Image
 
 # ================= CONFIGURAÇÕES =================
-DIRETORIO = '/home/cleiton/requiem.isnet.ru/template/images/skills'
+ROOT = os.path.dirname(os.path.abspath(__file__))
+DIRETORIO = os.path.join(ROOT, 'template', 'images', 'skills')
 
 # Ícones 64x64 cujo conteúdo NÃO está no padrão (2,2,36,36) — tratados manualmente
 EXCLUDED = {'Recover Totem.png', 'Recover Totem_G.png'}

@@ -73,7 +73,7 @@ skill icons:
   (class 27): removed a misleading "Prerequisite Skill" tooltip that appeared
   on 11 skills with no real dependency.
 - All new icons converted from the game's `.dds`/`.tga` assets via
-  `converter_icones.py`. `build_calculator_arrows.py` re-run after each
+  `convert_icons.py`. `build_calculator_arrows.py` re-run after each
   change (final count: 297/297 arrows matched).
 - Each race's changes validated visually against a local `serve.py` instance
   using Playwright screenshots.
