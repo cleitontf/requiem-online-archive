@@ -1450,18 +1450,18 @@ input.login_button:hover {
 #lt_9 { top: 281px; left: 112px; } /* 3 - 5 */
 #lt_10 { top: 304px; left: 282px; } /* 4 - 7, reposicionado (Face Strike/Adamant Mind moveram para col5/6) */
 #lt_33 { top: 282px; left: 160px; } /* 9 - Rush Attack -> Uplifting Cry */
-#lt_34 { top: 201px; left: 281px; } /* 2 - Skin of Stone -> Skin of Sand */
-#lt_35 { top: 393px; left: 185px; } /* 2 - Uplifting Cry -> Unstoppable Force */
+#lt_34 { top: 208px; left: 281px; } /* 2 - Skin of Stone -> Skin of Sand */
+#lt_35 { top: 400px; left: 185px; } /* 2 - Uplifting Cry -> Unstoppable Force */
 
 #lt_11 { top: 281px; left: 112px; } /* 3 - 5 */
 #lt_12 { top: 281px; left: 256px; } /* 6 - 5 */
 #lt_13 { top: 329px; left: 112px; } /* 3 - 5 */
 #lt_14 { top: 329px; left: 256px; } /* 6 - 5 */
-#lt_36 { top: 201px; left: 281px; } /* 2 - Skin of Stone -> Skin of Sand */
-#lt_37 { top: 273px; left: 57px; } /* 9 - Low Blow -> Divine Shield */
-#lt_38 { top: 329px; left: 153px; } /* 4 - Spiritual Intensification -> Lithifying Fog */
-#lt_39 { top: 377px; left: 297px; } /* 4 - Magic Mastery (Elec) -> Shield Smack */
-#lt_40 { top: 321px; left: 153px; } /* 9 - Moderate Heal -> Greater Heal */
+#lt_36 { top: 208px; left: 281px; } /* 2 - Skin of Stone -> Skin of Sand */
+#lt_37 { top: 281px; left: 64px; } /* 9 - Low Blow -> Divine Shield */
+#lt_38 { top: 329px; left: 160px; } /* 4 - Spiritual Intensification -> Lithifying Fog */
+#lt_39 { top: 377px; left: 304px; } /* 4 - Magic Mastery (Elec) -> Shield Smack */
+#lt_40 { top: 329px; left: 160px; } /* 9 - Moderate Heal -> Greater Heal */
 
 /* TM */
 #lt_15 { top: 42px; left: 64px; } /* 2 - 4 */
@@ -1479,7 +1479,7 @@ input.login_button:hover {
 #lt_28 { top: 329px; left: 64px; } /* 2 - 5 */
 #lt_29 { top: 329px; left: 112px; } /* 3 - 5 */
 #lt_31 { top: 329px; left: 256px; } /* 6 - 5 */
-#lt_32 { top: 201px; left: 281px; } /* Skin of Stone -> Skin of Sand */
+#lt_32 { top: 208px; left: 281px; } /* Skin of Stone -> Skin of Sand */
 
 /* BF */
 #lb_1 { top: 41px; left: 64px; } /* 2 - 5 */
@@ -1512,16 +1512,16 @@ input.login_button:hover {
 #lb_17 { top: 90px; left: 208px; } /* 5 - 4 */
 #lb_18 { top: 138px; left: 64px; } /* 2 - 4 */
 #lb_19 { top: 138px; left: 160px; } /* 4 - 4 */
-#lb_24 { top: 41px; left: 249px; } /* Vindictive Mind -> Emblazed Mind */
+#lb_24 { top: 41px; left: 256px; } /* Vindictive Mind -> Emblazed Mind */
 
 #lb_21 { top: 329px; left: 160px; } /* 4 - 5 */
 #lb_20 { top: 329px; left: 304px; } /* 7 - 5 */
 
 #lb_22 { top: 329px; left: 112px; } /* 3 - 5 */
 #lb_23 { top: 329px; left: 160px; } /* 4 - 5 */
-#lb_32 { top: 321px; left: 201px; } /* Loa's Curse -> Loa's Misfortune */
-#lb_33 { top: 321px; left: 57px; } /* Burning Meteor -> Fire Mandala */
-#lb_34 { top: 377px; left: 153px; } /* Protection Totem -> Disarming Totem */
+#lb_32 { top: 329px; left: 208px; } /* Loa's Curse -> Loa's Misfortune */
+#lb_33 { top: 329px; left: 64px; } /* Burning Meteor -> Fire Mandala */
+#lb_34 { top: 377px; left: 160px; } /* Protection Totem -> Disarming Totem */
 
 /* XF */
 #lx_1 { top: 41px; left: 64px; } /* 2 - 5 */
@@ -1627,10 +1627,10 @@ input.login_button:hover {
 #lk_43 { top: 331px; left: 256px; } /* 5 - 4 */
 #lk_44 { top: 400px; left: 90px; } /* 2 - 1 */
 
-#lk_10 { top: 329px; left: 249px; } /* Chaos Sniping */
-#lk_17 { top: 137px; left: 57px; } /* Binding Soul */
-#lk_45 { top: 297px; left: 57px; } /* Concussive Shot */
-#lk_46 { top: 321px; left: 153px; } /* Stinging Rescission */
+#lk_10 { top: 329px; left: 256px; } /* Chaos Sniping */
+#lk_17 { top: 137px; left: 64px; } /* Binding Soul */
+#lk_45 { top: 281px; left: 64px; } /* Concussive Shot */
+#lk_46 { top: 281px; left: 160px; } /* Stinging Rescission */
 /* Calculator */
 
 /* Fitting */
