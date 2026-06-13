@@ -110,3 +110,33 @@ the two highest-volume, purely mechanical text issues:
   of empty-data-driven icon paths like `rider_.png`/`target_.png`) is tracked
   for a follow-up pass — these need actual translation or data fixes, not a
   mechanical find/replace.
+
+## 2026-06-12 — Full site audit + English text cleanup (part 2)
+
+Translated the remaining 118 Russian quest pages identified in part 1:
+
+- **Title/Objective/Description/Reward**: for the 118 affected quest pages,
+  replaced Cyrillic `<h1>` titles, "Objective", "Description" and "Reward"
+  text with the official English strings from `all_csv/QuestString.csv`
+  (`Sub_Title`, `Quest_Goal`, `Quest_Dialog`, `Reward_Dialog`) — 44 titles,
+  116 objectives, 116 descriptions and 88 rewards fixed, plus the
+  "Дополнительная сумка" → "Additional bag" label on 3 quests with an extra
+  bag reward.
+- **Listing pages**: re-propagated the 44 newly-fixed titles to the 18
+  filter/search listing pages that still referenced them (124 entries).
+- **Breadcrumbs and prev/next quest navigation**: 46 breadcrumbs and 11
+  prev/next links still showed the old Russian title; replaced with the
+  quest's own (now English) title.
+- **NPC names, monster/item targets and reward items**: translated ~115
+  remaining Russian strings — quest giver/turn-in NPC names (e.g. Шедрин →
+  Shedrin, Карл Пеллус → Karl Pellus), kill/collect/delivery target names
+  shown via `monsters/m{id}` links (e.g. Железный солдат → Iron Soldier,
+  Ящик с припасами → Supply Crate), reward item names (Ксеон/Пояс
+  кровожадности → Xeon/Belt of Bloodlust), and the "Выберите одну из
+  возможных наград" reward-choice label.
+- Fixed the last leftover Cyrillic on the whole site: the pre-filled search
+  box value (`рекс` → `rex`) on a cached search-results page.
+- A full-site grep for Cyrillic text now returns zero matches across all
+  `.html` pages. Remaining Cyrillic in `template/js/*.js` is limited to
+  source-code comments and a dead legacy login-placeholder check — not
+  user-visible, left as-is.
