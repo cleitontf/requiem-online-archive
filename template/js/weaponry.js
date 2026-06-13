@@ -838,7 +838,7 @@ var Weaponry_box = {
 				
 				for (var i=0; i < that.item_status[that.item_status_slot].enchant.enchant_max; i++)
 				{
-					content += "<div class='fitting_xeon_border' xeon_status='"+i+"'><img id='xeon_"+i+"' class='fitting_xeon_img' src='template/images/"+((that.item_status[that.item_status_slot].xeons[i] == '') ? 'fitting/item_slot_shadow' : 'items/'+that.item_status[that.item_status_slot].xeons[i].icon)+".png' /></div>";
+					content += "<div class='fitting_xeon_border' xeon_status='"+i+"'><img id='xeon_"+i+"' class='fitting_xeon_img' src='template/images/"+((that.item_status[that.item_status_slot].xeons[i] == '') ? 'fitting/xeon_slot_shadow' : 'items/'+that.item_status[that.item_status_slot].xeons[i].icon)+".png' /></div>";
 				}
 				
 				content += "</div>"+that.filter(objs.name, false)+"<div class='module_sheet_captain'><div class='fitting_xeon_icon'>&nbsp;</div><div class='fitting_xeon_name'><a class='xeonlist_header_left"+((objs.order == 0 || objs.order) == 1 ? '_ordered' : '')+"' href='"+objs.url_site+"' onClick='Weaponry_box.search_xeons($(\"input.in_xeon_name\").val(), $(\"select.in_xeon_grade\").val(), "+((objs.order == 0) ? 1 : 0)+", 0); return false;'>"+that.strings[24]+((objs.order == 0 || objs.order == 1) ? '&#96'+((objs.order == 0) ? 5 : 6)+'0;' : '')+"</a></div><div class='fitting_xeon_type'><a class='xeonlist_header_left"+((objs.order == 2 || objs.order) == 3 ? '_ordered' : '')+"' href='"+objs.url_site+"' onClick='Weaponry_box.search_xeons($(\"input.in_xeon_name\").val(), $(\"select.in_xeon_grade\").val(), "+((objs.order == 2) ? 3 : 2)+", 0); return false;'>"+that.strings[25]+((objs.order == 2 || objs.order == 3) ? '&#96'+((objs.order == 2) ? 5 : 6)+'0;' : '')+"</a></div></div>";
@@ -974,7 +974,7 @@ var Weaponry_box = {
 			this.item_status[this.item_status_slot].enchant.enchanted -= 1;
 		
 		// Убираем иконку гамма-ксеона
-		$('#xeon_'+slot).attr('src', 'template/images/fitting/item_slot_shadow.png');
+		$('#xeon_'+slot).attr('src', 'template/images/fitting/xeon_slot_shadow.png');
 		
 		// Убираем иконку гамма-ксеона на предмете
 		$('#enchant_xeon_'+this.item_status_slot+'_'+slot).attr('src', 'template/images/fitting/xeon_slot_shadow.png');
