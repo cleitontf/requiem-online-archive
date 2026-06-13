@@ -227,6 +227,10 @@ var Calculator_box = {
 
 		$('#char_points').val(this.left_points_skill);
 		$('#char_dna').val(this.left_points_dna);
+
+		// select_level() acima já reescreveu o hash com skills_array zerado;
+		// re-sincroniza agora que skills_array reflete a build do hash original.
+		this.skill_format();
 	},
 
 	skill_add: function(handler) {
