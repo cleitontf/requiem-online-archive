@@ -89,3 +89,24 @@ skill icons:
   silently moving `window.location.pathname` to the site root. Fixed by
   capturing the page's path once at load time and reusing it for both the
   hash updates and the reset action.
+
+## 2026-06-12 — Full site audit + English text cleanup (part 1)
+
+Ran a full audit for `.gitignore` completeness, missing icons, and
+non-English/corrupted text. `.gitignore` and the quest/skill icon sets were
+already clean (only 11 isolated missing icons found, see follow-up). Fixed
+the two highest-volume, purely mechanical text issues:
+
+- **Mojibake cleanup**: fixed 6 corrupted-punctuation byte patterns
+  (`ЎЇ`, `Ў¦`, `Ў°`, `Ў±`, `¡¯`, `¡¦`, `¡¡`) across 365 quest pages —
+  873 occurrences restored to `'`, `"`/`"`, `...`.
+- **Quest list titles**: 1062 quest titles that showed up in Russian on
+  quest filter/search listing pages (while the quest's own page already had
+  the correct English title) were replaced with that English title — 1499
+  occurrences fixed across 77 listing pages.
+- Remaining non-English content (44 quest pages with no English title at
+  all, 74 quest pages with partial Russian body text/reward names, 10
+  monster pages with Russian-only names, 2 Russian 404 pages, and a handful
+  of empty-data-driven icon paths like `rider_.png`/`target_.png`) is tracked
+  for a follow-up pass — these need actual translation or data fixes, not a
+  mechanical find/replace.
