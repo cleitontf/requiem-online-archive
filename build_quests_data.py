@@ -1,7 +1,16 @@
 #!/usr/bin/env python3
 """
-Generates template/js/quests_data.js from the 838 individual quest HTML pages.
-Run once (or whenever quest pages change):
+Generates template/js/quests_data.js, the dataset behind the quest list's
+client-side search/filter/pagination on quests/index.html.
+
+Input:
+  - quests/q<id>/index.html for every quest page (name, level, location, type
+    are scraped from each page's HTML).
+
+Output:
+  - template/js/quests_data.js (var QUESTS_DATA = [...], sorted by level/name)
+
+Usage (run once, or whenever quest pages change):
   python3 build_quests_data.py
 """
 import os, re, json

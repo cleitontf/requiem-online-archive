@@ -3599,3 +3599,14 @@ select.char_level {
 }
 /* Hide login-related CSS artifacts */
 .main_body_content_login { display: none !important; }
+/* Archive notice banner */
+.archive-notice {
+	background-color: #2a1a00;
+	color: #f0c060;
+	border-left: 3px solid #f0c060;
+	padding: 6px 14px;
+	font-size: 0.82em;
+	text-align: center;
+	width: 100%;
+	box-sizing: border-box;
+}

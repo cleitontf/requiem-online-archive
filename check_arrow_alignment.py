@@ -1,3 +1,27 @@
+"""Verifica o alinhamento das setas de dependencia do calculator contra os
+icones de skill que elas conectam, e sugere correcoes de top/left em px.
+
+Para cada skill com requirement[1]/[2] preenchido (ver
+build_calculator_arrows.py), calcula a posicao esperada da seta a partir das
+bounding boxes reais dos icones (self/prereq) e do bbox visivel do asset da
+seta (ASSET_BBOX, que compensa o padding transparente de
+SkillTreeWnd_arrowND.png por tipo de seta). Se o desvio passar de THRESHOLD
+px, imprime o top/left sugerido para corrigir em template/images/main.css.
+
+Entrada:
+  - template/js/skills_data.json (requirement[1]/[2] de cada skill)
+  - <grid_dump.json> (argumento obrigatorio): bounding boxes reais (x, y, w, h)
+    de cada icone de skill e cada elemento de seta, por classe. Nao e gerado
+    por este script - precisa ser produzido separadamente via Playwright
+    (screenshot/avaliacao de layout de cada pagina calculator/<class_id>/).
+
+Saida:
+  - Nenhum arquivo gerado; imprime no stdout um diagnostico por skill
+    desalinhada (top/left atual vs. sugerido) ou aviso de dados faltando.
+
+Uso:
+  python3 check_arrow_alignment.py <grid_dump.json>
+"""
 import argparse
 import json
 import os

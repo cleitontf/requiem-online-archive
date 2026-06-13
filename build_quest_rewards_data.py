@@ -3,6 +3,21 @@
 
 Mapeia quest_id -> lista de itens de recompensa (auto + select), com
 icone, nome e quantidade, para o Quest_box.reward_load() renderizar.
+
+Entrada:
+  - TEMP_Quests_SCV/Quest.csv (dados de recompensa por quest)
+  - TEMP_Itens_CSV/ItemAsset.csv (nome/icone de cada item)
+  - quests/q<id>/ (usado so para filtrar quests que existem no archive)
+
+  ATENCAO: Quest.csv e ItemAsset.csv sao dados brutos do jogo e NAO estao
+  versionados neste repositorio (.gitignore). Sem esses arquivos em
+  TEMP_Quests_SCV/ e TEMP_Itens_CSV/, este script nao pode ser executado.
+
+Saida:
+  - template/js/quest_rewards_data.js (var QUEST_REWARDS_DATA = {...})
+
+Uso:
+  python3 build_quest_rewards_data.py
 """
 import csv
 import json

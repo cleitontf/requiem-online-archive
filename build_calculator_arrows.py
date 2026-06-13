@@ -6,6 +6,19 @@ Para cada par (skill, pre-requisito), calcula o ponto medio esperado da seta
 que os conecta a partir das posicoes dos icones na grade da calculadora
 (48px por celula, icone 36x36 com offset de 7px), e casa com a seta real
 mais proxima (posicao/tamanho lidos de main.css e do HTML de cada classe).
+
+Entrada:
+  - template/js/skills_data.json (skills + requirement[0] de cada classe)
+  - template/images/main.css (posicao/tamanho das setas .calculator_arrowN)
+  - calculator/<class_id>/index.html (grade de skills e setas de cada classe)
+
+Saida (sobrescritos):
+  - template/js/skills_data.json
+  - template/js/skills_data.js (mesma estrutura, exposta como var SKILLS_DATA
+    para funcionar em paginas abertas via file://)
+
+Uso:
+  python3 build_calculator_arrows.py
 """
 import json
 import re
