@@ -13,7 +13,7 @@ var Calculator_box = {
 	skills_objects: [],
 	build_id: 0,
 	skills_array: [],
-	strings: ['Loading...','Level ','No builds found.','','Passive','MP','Casting Time','Instant Cast','Skill Downtime','Range','Skill Level','Prerequisite Skill','Duration','sec','m','min','New Build','Compatible Weapon','Prerequisite Level'],
+	strings: ['Loading...','Level ','No builds found.','','Passive','MP','Casting Time','Instant Cast','Skill Downtime','Range','Skill Level','Prerequisite Skill','Duration','sec','m','min','New Build','Compatible Weapon','Prerequisite Level','Saved builds are unavailable in this browser.'],
 
 	weapon_map: {2:'Sword',4:'Axe',8:'Bludgeon',16:'2H Sword',32:'Dual Wield',512:'Knuckle',2048:'Crossbow',4096:'Launcher',16384:'Staff',32768:'Wand'},
 
@@ -67,7 +67,7 @@ var Calculator_box = {
 				that.load_from_hash();
 			}
 
-			that.build_list(clas, 0);
+			that.build_list();
 			that.update_summary();
 		};
 
@@ -147,8 +147,93 @@ var Calculator_box = {
 		this.skill_format();
 	},
 
-	build_list: function(clas, limit) {
-		$('div.calculator_build_list').html("<div class='module_sheet_body_ module_action_msg'>No saved builds (offline mode).</div>");
+	build_storage_key: function() {
+		return 'requiem_builds_' + this.avatar_clas;
+	},
+
+	storage_available: function() {
+		try {
+			var k = '__rq_test__';
+			localStorage.setItem(k, '1');
+			localStorage.removeItem(k);
+			return true;
+		} catch (e) {
+			return false;
+		}
+	},
+
+	load_builds: function() {
+		if (!this.storage_available()) return [];
+		try {
+			var raw = localStorage.getItem(this.build_storage_key());
+			return raw ? JSON.parse(raw) : [];
+		} catch (e) {
+			return [];
+		}
+	},
+
+	escape_html: function(text) {
+		return String(text).replace(/[&<>]/g, function(c) {
+			return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+		});
+	},
+
+	save_build: function() {
+		if (!this.level_selected || !this.storage_available()) return;
+
+		var name = window.prompt('Name this build:', '');
+		if (!name) return;
+		name = name.trim();
+		if (!name) return;
+
+		var builds = this.load_builds();
+		builds.push({
+			name: name,
+			level: this.avatar_level,
+			hash: this.avatar_level + '-' + this.skills_array.join(','),
+			savedAt: Date.now()
+		});
+		localStorage.setItem(this.build_storage_key(), JSON.stringify(builds));
+		this.build_list();
+	},
+
+	delete_build: function(index) {
+		var builds = this.load_builds();
+		builds.splice(index, 1);
+		localStorage.setItem(this.build_storage_key(), JSON.stringify(builds));
+		this.build_list();
+	},
+
+	load_saved_build: function(hash) {
+		window.location.hash = '#' + hash;
+		this.load_from_hash();
+	},
+
+	build_list: function() {
+		var $items = $('#calc_build_list_items');
+		if (!$items.length) return;
+
+		if (!this.storage_available()) {
+			$items.html("<div class='module_sheet_body_ module_action_msg'>" + this.strings[19] + "</div>");
+			return;
+		}
+
+		var builds = this.load_builds();
+		if (!builds.length) {
+			$items.html("<div class='module_sheet_body_ module_action_msg'>" + this.strings[2] + "</div>");
+			return;
+		}
+
+		var html = '';
+		for (var i = 0; i < builds.length; i++) {
+			var b = builds[i];
+			html += '<div class="calculator_build_list_item">' +
+				'<a class="calculator_build_list_name" href="#' + this.escape_html(b.hash) + '" onclick="Calculator_box.load_saved_build(\'' + b.hash + '\'); return false;">' + this.escape_html(b.name) + '</a>' +
+				'<span class="calculator_build_list_level">Lvl ' + b.level + '</span>' +
+				'<span class="calculator_build_list_delete" onclick="Calculator_box.delete_build(' + i + ')" title="Delete">&times;</span>' +
+				'</div>';
+		}
+		$items.html(html);
 	},
 
 	reset: function() {

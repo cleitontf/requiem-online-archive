@@ -1472,11 +1472,75 @@ input.login_button:hover {
 	float: left;
 }
 
+.calculator_build_list {
+	margin-top: 15px;
+	padding: 10px;
+	background-color: #0e202f;
+	border: 1px solid #242d38;
+	border-radius: 6px;
+}
+
 .calculator_build_list_title {
-	padding-left: 10px;
-	clear: left;
+	font-weight: bold;
+	font-size: 12px;
+	color: #e1c85d;
 	text-align: left;
-	margin-top: 10px;
+	margin-bottom: 6px;
+}
+
+.calculator_save_btn {
+	margin-bottom: 8px;
+}
+
+.calculator_build_list_item {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding: 5px 0;
+	border-top: 1px solid #242d38;
+	text-align: left;
+}
+
+.calculator_build_list_item:first-child {
+	border-top: none;
+}
+
+.calculator_build_list_name {
+	flex: 1;
+	color: #33b2e1;
+	cursor: pointer;
+	text-decoration: none;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: nowrap;
+}
+
+.calculator_build_list_name:hover {
+	text-decoration: underline;
+}
+
+.calculator_build_list_level {
+	margin: 0 8px;
+	color: #879ba5;
+	font-size: 11px;
+}
+
+.calculator_build_list_delete {
+	color: #879ba5;
+	font-weight: bold;
+	cursor: pointer;
+	padding: 0 4px;
+}
+
+.calculator_build_list_delete:hover {
+	color: #c83232;
+}
+
+.calculator_build_list_hint {
+	margin-top: 8px;
+	color: #879ba5;
+	font-size: 10px;
+	text-align: left;
 }
 
 .calculator_build_summary {
