@@ -989,6 +989,51 @@ input.login_button:hover {
 	color: #e1c85d;
 }
 
+/* Status page */
+.status_table {
+	width: 100%;
+	border-collapse: collapse;
+	font-size: 12px;
+}
+
+.status_table th {
+	text-align: left;
+	font-weight: bold;
+	font-size: 10px;
+	text-transform: uppercase;
+	letter-spacing: 0.5px;
+	color: #6a7f8e;
+	padding: 0 10px 8px;
+	border-bottom: 1px solid #1e2d3a;
+}
+
+.status_table td {
+	padding: 8px 10px;
+	border-bottom: 1px solid #1a2530;
+	vertical-align: top;
+	color: #879ba5;
+}
+
+.status_table tr:last-child td {
+	border-bottom: none;
+	padding-bottom: 0;
+}
+
+.status_table td:first-child {
+	color: #e1c85d;
+	font-weight: bold;
+	white-space: nowrap;
+}
+
+.status_limitations {
+	margin: 0;
+	padding-left: 20px;
+}
+
+.status_limitations li {
+	padding: 4px 0;
+}
+
 .news_list {
 	width: 670px;
 	margin: 0 auto;
@@ -2211,6 +2256,32 @@ select.char_level {
 	font-size: 9px;
 	color: #000000;
 	cursor: url(pointer.cur), pointer;
+}
+
+.map-tooltip {
+	display: none;
+	position: absolute;
+	bottom: calc(100% + 6px);
+	left: 50%;
+	transform: translateX(-50%);
+	background: #1a1a2e;
+	border: 1px solid #f0c060;
+	color: #f0f0f0;
+	padding: 5px 10px;
+	border-radius: 4px;
+	white-space: nowrap;
+	font-size: 0.82em;
+	z-index: 100;
+	pointer-events: none;
+}
+
+.map-tooltip .map-tooltip-level {
+	color: #f0c060;
+	margin-left: 8px;
+}
+
+.monsters_map_monsters:hover .map-tooltip {
+	display: block;
 }
 
 .monsters_monster_id {
@@ -3609,4 +3680,41 @@ select.char_level {
 	text-align: center;
 	width: 100%;
 	box-sizing: border-box;
+}
+
+/* === Mobile responsiveness === */
+@media (max-width: 768px) {
+
+	/* Drop the fixed ~980px page width */
+	.main_body,
+	.main_body_content {
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	.header_logo,
+	.footer_banner,
+	.footer_menu {
+		max-width: 100%;
+	}
+
+	/* Stack the navigation sidebar above the main content instead of a
+	   fixed left column */
+	.main_body_content > table,
+	.main_body_content > table > tbody,
+	.main_body_content > table > tbody > tr,
+	.main_body_left,
+	.main_body_right {
+		display: block;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* Quest/monster tables, zone maps and the skill calculator grid are
+	   wider than a phone screen. Map markers (Tarefa 1) and calculator
+	   skill arrows are positioned with absolute pixel coordinates, so
+	   instead of reflowing them, let this container scroll horizontally. */
+	.main_body_modules_content {
+		overflow-x: auto;
+	}
 }
