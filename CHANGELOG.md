@@ -145,3 +145,16 @@ Translated the remaining 118 Russian quest pages identified in part 1:
   `Q_Taco`, `E_Tile`→`Tile`) from the game client into
   `template/images/items/*.png`, fixing broken icons on quests q58030,
   q10320, q32260, q32250, q32280 and q9970.
+
+## 2026-06-12 — Link/accessibility fixes and calculator hash sync
+
+- **About page**: fixed the "View on GitHub" link, which pointed to
+  `https://github.com` instead of the project's repo.
+- **Home logo link**: added an `aria-label` to the logo link on all
+  ~2,981 pages, which previously had no accessible text (`<a href=".">`
+  wrapping only a background-image div).
+- **Calculator hash sync**: `load_from_hash()` now re-syncs the URL hash
+  after restoring a shared build. Previously, `select_level()` (called
+  during hash parsing) rewrote the hash with an all-zero build before the
+  skill levels were restored, so the visible build was correct on first
+  load but got lost on reload or "Copy link".
