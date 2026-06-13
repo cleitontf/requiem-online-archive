@@ -1,2 +1,4 @@
 User-agent: *
 Disallow:
+
+Sitemap: https://cleitontf.github.io/requiem-online-archive/sitemap.xml
