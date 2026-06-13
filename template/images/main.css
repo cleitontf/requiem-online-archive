@@ -3846,3 +3846,14 @@ select.char_level {
 		overflow-x: auto;
 	}
 }
+
+.lang-badge {
+	display: inline-block;
+	font-size: 0.75em;
+	padding: 1px 6px;
+	border-radius: 3px;
+	background: rgba(255,255,255,0.08);
+	color: #aaa;
+	margin-left: 6px;
+	vertical-align: middle;
+}
