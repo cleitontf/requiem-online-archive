@@ -61,6 +61,13 @@ body {
 	background-color: #18212B;
 }
 
+button,
+input,
+select,
+textarea {
+	font-family: inherit;
+}
+
 html {
 	background-color: #18212B;
 }
@@ -1416,6 +1423,10 @@ input.login_button:hover {
 	color: #18212b;
 }
 
+select.char_level {
+	font-size: 8pt;
+}
+
 .calculator_build_msg {
 	clear: left;
 	text-align: left;
@@ -2105,6 +2116,18 @@ input.login_button:hover {
 	background: url(maps/monster_1_coord.png) no-repeat;
 }
 
+.build_list .module_sheet_body:has(.monster_0_coord) {
+	box-shadow: inset 3px 0 0 #dcc828;
+}
+
+.build_list .module_sheet_body:has(.monster_1_coord) {
+	box-shadow: inset 3px 0 0 #c83232;
+}
+
+.build_list .module_sheet_body:has(.npc_coord) {
+	box-shadow: inset 3px 0 0 #3264dc;
+}
+
 .monsters_map_monsters {
 	position: absolute;
 	font-weight: bold;
@@ -2202,27 +2225,11 @@ input.login_button:hover {
 }
 
 .monsters_monster_tab_ {
-	float: left;
-	width: 10px;
+	display: none;
 }
 
 .monsters_monster_title_ {
-	position: relative;
-	float: left;
-	border: 1px solid #242d38;
-	border-radius: 6px 6px 0 0;
-	margin: 0 1px -1px;
-	padding: 3px;
-	font-weight: bold;
-	background-color: #0d151e;
-	width: 100px;
-	text-align: center;
-	z-index: 2;
-}
-
-.monsters_monster_title_active {
-	background-color: #0d151e;
-	border-bottom: 1px solid #0d151e;
+	display: none;
 }
 
 .monsters_monster_content {
@@ -2231,7 +2238,9 @@ input.login_button:hover {
 	background-color: #0d151e;
 	padding: 12px;
 	width: 655px;
-	height: 200px;
+	min-height: 200px;
+	height: auto;
+	overflow: hidden;
 	z-index: 1;
 }
 
@@ -2252,6 +2261,10 @@ input.login_button:hover {
 	padding: 0 5px;
 }
 
+.monsters_monster_drop:empty {
+	display: none;
+}
+
 .monsters_monster_stats_1 {
 	width: 150px;
 }
@@ -2262,12 +2275,17 @@ input.login_button:hover {
 
 .monsters_monster_stats_3 {
 	width: 170px;
+	display: block !important;
 }
 
 .monsters_monster_stats_title {
 	font-weight: bold;
 	font-size: 12px;
 	text-align: left;
+	color: #e1c85d;
+	border-bottom: 1px solid #242d38;
+	padding-bottom: 3px;
+	margin-bottom: 6px;
 }
 
 .monsters_monster_stats_values {

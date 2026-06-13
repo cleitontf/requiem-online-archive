@@ -158,3 +158,24 @@ Translated the remaining 118 Russian quest pages identified in part 1:
   during hash parsing) rewrote the hash with an all-zero build before the
   skill levels were restored, so the visible build was correct on first
   load but got lost on reload or "Copy link".
+
+## 2026-06-12 — Design pass: calculator typography, monster listing and detail pages
+
+- **Form typography site-wide**: `normalize.css`'s `font-family: sans-serif`
+  on `button`/`input`/`select`/`textarea` was overriding the theme's Inter
+  font on every form control across the site. Added a global
+  `font-family: inherit` rule plus a small `select.char_level` size fix, so
+  the calculator's level selector, buttons and labels now match the rest of
+  the theme.
+- **Monster zone listings**: rows in `monsters/[zona]` now carry a left-edge
+  color accent (`#dcc828` non-aggressive, `#c83232` aggressive, `#3264dc`
+  NPC) matching the existing map legend, giving each monster type a subtle
+  visual distinction beyond the legend alone.
+- **Monster detail pages**: reworked `.monsters_monster_content` on
+  `monsters/m[id]` so all stat groups (Stats, Characteristics, Defense,
+  Resistance, Other) are shown together with styled section headers and
+  dividers, instead of being split across a non-functional "Stats" /
+  "Special Drop" tab pair. The always-empty "Special Drop" panel is now
+  hidden via `:empty`, and the previously inaccessible Resistance/Other
+  block (hidden by a tab-index bug in `monsters.js`) is now visible on all
+  ~865 monster pages.
