@@ -359,15 +359,26 @@
 </div></td>
 <td class="calculator_sheet"><div class="calculator_content">
 <div class="calculator_job_img"><img src="template/images/clas/Tran_Radient.png"/></div>
+<div class="calculator_build_summary" id="calc_build_summary">
+	<div class="calculator_build_summary_title">Build Summary</div>
+	<div class="calculator_build_summary_row"><span class="calculator_build_summary_label">Class</span><span class="calculator_build_summary_value" id="summary_class"></span></div>
+	<div class="calculator_build_summary_row"><span class="calculator_build_summary_label">Level</span><span class="calculator_build_summary_value" id="summary_level">-</span></div>
+	<div class="calculator_build_summary_row"><span class="calculator_build_summary_label">Skill Points</span><span class="calculator_build_summary_value" id="summary_skill_points">0 / 0</span></div>
+	<div class="calculator_build_summary_row"><span class="calculator_build_summary_label">DNA Points</span><span class="calculator_build_summary_value" id="summary_dna_points">0 / 0</span></div>
+	<div class="calculator_build_summary_row"><span class="calculator_build_summary_label">Status</span><span class="calculator_build_summary_value" id="summary_status">Incomplete</span></div>
+</div>
 <form method="post"><div class="calculator_build_info">
 <div class="calculator_build_info_title calculator_build_info_title_">Select level →</div>
 <div class="calculator_build_info_value"><span class="character_input_info" id="char_level_hide"><select class="char_level"><option selected="" value="-">-</option></select></span></div>
-<div class="calculator_build_info_title">Skill points left</div>
-<div class="calculator_build_info_value"><input class="character_input_info" id="char_points" name="char_points" readonly="" type="text" value="0"/></div>
-<div class="calculator_build_info_title">DNA points left</div>
-<div class="calculator_build_info_value"><input class="character_input_info" id="char_dna" name="char_dna" readonly="" type="text" value="0"/></div>
 <button type="button" class="calculator_reset_btn" onclick="Calculator_box.reset()">Reset build</button>
-<button type="button" class="calculator_reset_btn" id="calc_copy_btn" onclick="Calculator_box.copy_link()">Copy link</button>
+<div class="calculator_copy_dropdown" id="calc_copy_dropdown">
+	<button type="button" class="calculator_reset_btn" id="calc_copy_btn" onclick="Calculator_box.toggle_copy_menu(event)">Copy &#9662;</button>
+	<div class="calculator_copy_menu" id="calc_copy_menu">
+		<div class="calculator_copy_menu_item" onclick="Calculator_box.copy_link()">Link</div>
+		<div class="calculator_copy_menu_item" onclick="Calculator_box.copy_summary()">Summary</div>
+		<div class="calculator_copy_menu_item" onclick="Calculator_box.copy_export()">Export</div>
+	</div>
+</div>
 </div></form>
 </div></td>
 </tr>

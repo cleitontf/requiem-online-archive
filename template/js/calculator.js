@@ -5,9 +5,11 @@ var Calculator_box = {
 	page_path: window.location.pathname,
 	avatar_clas: 0,
 	avatar_level: 1,
+	level_selected: false,
 	level_points_array: [0, 1, 2, 3, 4, 5, 6, 7, 8, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 97, 98, 99, 100, 101, 102, 103, 104, 105, 106, 109],
 	left_points_skill: 0,
 	left_points_dna: 55,
+	total_points_dna: 55,
 	skills_objects: [],
 	build_id: 0,
 	skills_array: [],
@@ -66,6 +68,7 @@ var Calculator_box = {
 			}
 
 			that.build_list(clas, 0);
+			that.update_summary();
 		};
 
 		// Skills data is loaded statically via skills_data.js (works under file://)
@@ -116,11 +119,10 @@ var Calculator_box = {
 
 	select_level: function(level) {
 		this.avatar_level = parseInt(level);
+		this.level_selected = true;
 		this.left_points_skill = this.level_points_array[this.avatar_level - 1] || 0;
 
 		$('#char_level_hide').html(this.avatar_level);
-		$('#char_points').val(this.left_points_skill);
-		$('#char_dna').val(this.left_points_dna);
 
 		// Update select dropdown to show selected level
 		$('select.char_level').val(String(this.avatar_level));
@@ -153,32 +155,79 @@ var Calculator_box = {
 		window.location.href = this.page_path;
 	},
 
+	toggle_copy_menu: function(e) {
+		e.stopPropagation();
+		$('#calc_copy_menu').toggleClass('open');
+	},
+
+	close_copy_menu: function() {
+		$('#calc_copy_menu').removeClass('open');
+	},
+
 	copy_link: function() {
-		var url = window.location.href;
-		var btn = document.getElementById('calc_copy_btn');
+		this._copy_text(window.location.href);
+	},
+
+	copy_summary: function() {
+		var levelVal = this.level_selected ? this.avatar_level : '-';
+		var total_skill = this.level_selected ? (this.level_points_array[this.avatar_level - 1] || 0) : 0;
+		var used_skill = total_skill - this.left_points_skill;
+		var used_dna = this.total_points_dna - this.left_points_dna;
+		var className = $('.module_action_title_ h3').first().text();
+
+		var text = className + ' Lv. ' + levelVal + '\n' +
+			'Skills: ' + used_skill + '/' + total_skill + ' used\n' +
+			'DNA: ' + used_dna + '/' + this.total_points_dna + ' used\n' +
+			'Link: ' + window.location.href;
+
+		this._copy_text(text);
+	},
+
+	copy_export: function() {
+		var skillLines = [];
+		var dnaLines = [];
+
+		for (var i = 0; i < this.skills_objects.length; i++) {
+			var obj = this.skills_objects[i];
+			if (obj.level <= 0) continue;
+			var line = obj.name + ': ' + obj.level + '/' + obj.max_level;
+			if (obj.id > 600000) dnaLines.push(line);
+			else skillLines.push(line);
+		}
+
+		var text = '[Skills]\n' + (skillLines.length ? skillLines.join('\n') : '-') +
+			'\n\n[DNA]\n' + (dnaLines.length ? dnaLines.join('\n') : '-');
+
+		this._copy_text(text);
+	},
+
+	_copy_text: function(text) {
 		var that = this;
+		this.close_copy_menu();
 		if (navigator.clipboard) {
-			navigator.clipboard.writeText(url).then(function() {
-				that._btn_feedback(btn, 'Copied!', 'Copy link');
-			}).catch(function() { that._copy_fallback(url, btn); });
+			navigator.clipboard.writeText(text).then(function() {
+				that._btn_feedback();
+			}).catch(function() { that._copy_fallback(text); });
 		} else {
-			this._copy_fallback(url, btn);
+			this._copy_fallback(text);
 		}
 	},
 
-	_btn_feedback: function(btn, msg, restore) {
+	_btn_feedback: function() {
+		var btn = document.getElementById('calc_copy_btn');
 		if (!btn) return;
-		btn.textContent = msg;
-		setTimeout(function() { btn.textContent = restore; }, 1500);
+		var original = btn.textContent;
+		btn.textContent = '✓ Copied';
+		setTimeout(function() { btn.textContent = original; }, 2000);
 	},
 
-	_copy_fallback: function(url, btn) {
+	_copy_fallback: function(text) {
 		var ta = document.createElement('textarea');
-		ta.value = url;
+		ta.value = text;
 		ta.style.cssText = 'position:fixed;opacity:0';
 		document.body.appendChild(ta);
 		ta.select();
-		try { document.execCommand('copy'); this._btn_feedback(btn, 'Copied!', 'Copy link'); } catch(e) {}
+		try { document.execCommand('copy'); this._btn_feedback(); } catch(e) {}
 		document.body.removeChild(ta);
 	},
 
@@ -225,9 +274,6 @@ var Calculator_box = {
 			}
 		}
 
-		$('#char_points').val(this.left_points_skill);
-		$('#char_dna').val(this.left_points_dna);
-
 		// select_level() acima já reescreveu o hash com skills_array zerado;
 		// re-sincroniza agora que skills_array reflete a build do hash original.
 		this.skill_format();
@@ -251,7 +297,6 @@ var Calculator_box = {
 
 								$('#v' + skill_id + ', #bv' + skill_id).html(this.skills_objects[l].level);
 								$('#' + skill_id).attr('src', 'template/images/skills/' + this.skills_objects[l].icon + '.png');
-								(skill_type == 0 ? $('#char_points').val(this.left_points_skill) : $('#char_dna').val(this.left_points_dna));
 
 								for (var m = 0; m < this.skills_objects.length; m++) {
 									var need_array = this.skills_objects[m].requirement;
@@ -317,7 +362,6 @@ var Calculator_box = {
 					this.skills_array[l] -= 1;
 
 					$('#v' + skill_id + ', #bv' + skill_id).html((this.skills_objects[l].level > 0 ? this.skills_objects[l].level : ''));
-					(skill_type == 0 ? $('#char_points').val(this.left_points_skill) : $('#char_dna').val(this.left_points_dna));
 
 					this.skill_show(handler);
 					this.skill_format();
@@ -453,12 +497,97 @@ var Calculator_box = {
 		$('#char_build').val(this.skills_array.join());
 		if (this.avatar_level > 0)
 			history.replaceState(null, '', this.page_path + '#' + this.avatar_level + '-' + this.skills_array.join(','));
+		this.update_summary();
+	},
+
+	validate_skills: function() {
+		var has_invalid = false;
+
+		for (var i = 0; i < this.skills_objects.length; i++) {
+			var obj = this.skills_objects[i];
+			var prefix = (obj.id > 600000) ? 'dna' : 'skill';
+			var invalid = false;
+
+			if (obj.level > 0) {
+				// Rank acima do máximo permitido
+				if (obj.level > obj.max_level) invalid = true;
+
+				// Pré-requisito de árvore não alocado
+				if (Array.isArray(obj.requirement)) {
+					for (var j = 0; j < this.skills_objects.length; j++) {
+						if (this.skills_objects[j].id == obj.requirement[0] && this.skills_objects[j].level == 0) {
+							invalid = true;
+							break;
+						}
+					}
+				}
+
+				// Skill pré-requisito sem o nível mínimo exigido
+				if (Array.isArray(obj.need_skill)) {
+					for (var k = 0; k < this.skills_objects.length; k++) {
+						if (this.skills_objects[k].id == obj.need_skill[0] && this.skills_objects[k].level < obj.need_skill[2]) {
+							invalid = true;
+							break;
+						}
+					}
+				}
+
+				// Rank exige nível de personagem maior que o selecionado
+				if (obj.skill_levels && obj.skill_levels[obj.level - 1] > this.avatar_level) invalid = true;
+			}
+
+			$('#' + prefix + '_' + obj.id).toggleClass('skill_invalid', invalid);
+			if (invalid) has_invalid = true;
+		}
+
+		return has_invalid;
+	},
+
+	update_summary: function() {
+		var hasLevel = this.level_selected;
+
+		var total_skill = hasLevel ? (this.level_points_array[this.avatar_level - 1] || 0) : 0;
+		var used_skill = total_skill - this.left_points_skill;
+		var used_dna = this.total_points_dna - this.left_points_dna;
+		var has_invalid = this.validate_skills();
+
+		$('#summary_class').text($('.module_action_title_ h3').first().text());
+		$('#summary_level').text(hasLevel ? ('Lv. ' + this.avatar_level) : '-');
+		$('#summary_skill_points').text(used_skill + ' / ' + total_skill);
+		$('#summary_dna_points').text(used_dna + ' / ' + this.total_points_dna);
+
+		var status, statusClass;
+		if (this.left_points_skill < 0 || this.left_points_dna < 0) {
+			status = 'Over cap';
+			statusClass = 'summary_status_overcap';
+		} else if (has_invalid) {
+			status = 'Invalid';
+			statusClass = 'summary_status_invalid';
+		} else if (this.left_points_skill > 0 || this.left_points_dna > 0) {
+			status = 'Incomplete';
+			statusClass = 'summary_status_incomplete';
+		} else {
+			status = 'Valid';
+			statusClass = 'summary_status_valid';
+		}
+
+		$('#summary_status')
+			.text(status)
+			.removeClass('summary_status_valid summary_status_overcap summary_status_incomplete summary_status_invalid')
+			.addClass(statusClass);
 	},
 };
 
 // Level selection
 $(document).on('change', 'select.char_level', function() {
 	Calculator_box.select_level($(this).val());
+});
+
+// Close the "Copy" dropdown when clicking outside of it
+$(document).on('click', function(e) {
+	if (!$(e.target).closest('#calc_copy_dropdown').length) {
+		Calculator_box.close_copy_menu();
+	}
 });
 
 // Skill tooltip on hover
