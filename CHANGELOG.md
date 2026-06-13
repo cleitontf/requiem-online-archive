@@ -140,3 +140,8 @@ Translated the remaining 118 Russian quest pages identified in part 1:
   `.html` pages. Remaining Cyrillic in `template/js/*.js` is limited to
   source-code comments and a dead legacy login-placeholder check — not
   user-visible, left as-is.
+- **Missing quest objective icons**: converted the 6 remaining `.dds` icons
+  (`I_E_Metal_02`, `I_E_Stomach_06`, `Q_Hotdog`, `Q_Pancakes`→`Q_Pancake`,
+  `Q_Taco`, `E_Tile`→`Tile`) from the game client into
+  `template/images/items/*.png`, fixing broken icons on quests q58030,
+  q10320, q32260, q32250, q32280 and q9970.
