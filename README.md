@@ -76,7 +76,7 @@ to match your new path — e.g. `<base href="/">` for a root deployment.
 ```
 .
 ├── index.html, about/, requiem/, community/   # static informational pages
-├── calculator/<class_id>/                     # 24 skill calculator pages
+├── calculator/<class_slug>/                   # 24 skill calculator pages (e.g. calculator/warlord/)
 ├── monsters/<zone_id>/, monsters/m<id>/       # zone maps and monster pages
 ├── quests/q<id>/, quests/<LTMMxx>/            # individual quests + filter pages
 ├── template/                                  # shared CSS, JS, images

@@ -10,7 +10,8 @@ mais proxima (posicao/tamanho lidos de main.css e do HTML de cada classe).
 Entrada:
   - template/js/skills_data.json (skills + requirement[0] de cada classe)
   - template/images/main.css (posicao/tamanho das setas .calculator_arrowN)
-  - calculator/<class_id>/index.html (grade de skills e setas de cada classe)
+  - calculator/<class_slug>/index.html (grade de skills e setas de cada classe;
+    CLASS_DIRS mapeia o id numerico da classe para o nome da pasta)
 
 Saida (sobrescritos):
   - template/js/skills_data.json
@@ -30,12 +31,25 @@ SKILLS_DATA_JS = 'template/js/skills_data.js'
 ARROW_DIM = {1: (64, 32), 2: (16, 32), 3: (16, 16), 4: (32, 64), 5: (32, 16),
               6: (16, 16), 7: (16, 32), 8: (64, 32), 9: (32, 128), 10: (32, 96)}
 
+# Mapeia o id numerico de cada classe (chaves de skills_data.json) para o nome
+# da pasta em calculator/, usado desde a Semana 2 (URLs legiveis por slug).
+CLASS_DIRS = {
+    '2': 'defender', '3': 'commander', '4': 'protector',
+    '6': 'templar', '7': 'tempest', '8': 'radiant',
+    '12': 'warrior', '13': 'berserker', '14': 'warlord',
+    '16': 'shaman', '17': 'forsaker', '18': 'mystic',
+    '32': 'rogue', '33': 'shadowrunner', '34': 'assassin',
+    '36': 'soulhunter', '37': 'defiler', '38': 'dominator',
+    '22': 'hunter', '23': 'avenger', '24': 'ranger',
+    '26': 'battle-magician', '27': 'druid', '28': 'elementalist',
+}
+
 CSS = open(ROOT_CSS).read()
 MATCH_THRESHOLD = 25  # px, distancia maxima entre seta esperada e seta real
 
 
 def get_grid(cls):
-    html = open(f'calculator/{cls}/index.html').read()
+    html = open(f'calculator/{CLASS_DIRS[cls]}/index.html').read()
     table = re.search(r'<table class="calculator_skills_sheet">(.*?)</table>', html, re.S).group(1)
     # A secao DNA fica em linhas separadas, sem setas de pre-requisito;
     # ignora-las evita casamentos espurios com setas da grade de skills.
@@ -50,7 +64,7 @@ def get_grid(cls):
 
 
 def get_arrows(cls):
-    html = open(f'calculator/{cls}/index.html').read()
+    html = open(f'calculator/{CLASS_DIRS[cls]}/index.html').read()
     out = []
     for atype, aid in re.findall(r'<div class="calculator_arrow(\d+)" id="(\w+)"', html):
         body = re.search(rf'#{aid}\s*\{{([^}}]*)\}}', CSS).group(1)

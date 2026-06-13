@@ -13,7 +13,8 @@ Entrada:
   - <grid_dump.json> (argumento obrigatorio): bounding boxes reais (x, y, w, h)
     de cada icone de skill e cada elemento de seta, por classe. Nao e gerado
     por este script - precisa ser produzido separadamente via Playwright
-    (screenshot/avaliacao de layout de cada pagina calculator/<class_id>/).
+    (screenshot/avaliacao de layout de cada pagina calculator/<class_slug>/,
+    ex.: calculator/warlord/).
 
 Saida:
   - Nenhum arquivo gerado; imprime no stdout um diagnostico por skill
