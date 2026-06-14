@@ -1,6 +1,27 @@
 // Calculator - Static offline version
 var SKILLS_DATA = (typeof SKILLS_DATA !== 'undefined') ? SKILLS_DATA : null;
 
+// Base62: encodes each skill's point value (0-61) as a single character,
+// used to shorten the build hash in the URL (e.g. #50-1239...A4566...).
+var BASE62_CHARS = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+
+function encodeSkills(values) {
+	var out = '';
+	for (var i = 0; i < values.length; i++) {
+		out += BASE62_CHARS[values[i]] || '0';
+	}
+	return out;
+}
+
+function decodeSkills(str) {
+	var out = [];
+	for (var i = 0; i < str.length; i++) {
+		var v = BASE62_CHARS.indexOf(str[i]);
+		out.push(v >= 0 ? v : 0);
+	}
+	return out;
+}
+
 var Calculator_box = {
 	page_path: window.location.pathname,
 	avatar_clas: 0,
@@ -190,7 +211,7 @@ var Calculator_box = {
 		builds.push({
 			name: name,
 			level: this.avatar_level,
-			hash: this.avatar_level + '-' + this.skills_array.join(','),
+			hash: this.current_hash(),
 			savedAt: Date.now()
 		});
 		localStorage.setItem(this.build_storage_key(), JSON.stringify(builds));
@@ -328,7 +349,9 @@ var Calculator_box = {
 		if (dash < 1) return;
 
 		var level = parseInt(clean.substring(0, dash));
-		var skills = clean.substring(dash + 1).split(',').map(Number);
+		var skillsStr = clean.substring(dash + 1);
+		// Old format: comma-separated point values. New format: 1 Base62 char per skill.
+		var skills = skillsStr.indexOf(',') >= 0 ? skillsStr.split(',').map(Number) : decodeSkills(skillsStr);
 		if (isNaN(level) || level < 1 || level > 90) return;
 
 		this.select_level(level);
@@ -581,10 +604,14 @@ var Calculator_box = {
 		return stat_value_end;
 	},
 
+	current_hash: function() {
+		return this.avatar_level + '-' + encodeSkills(this.skills_array);
+	},
+
 	skill_format: function() {
 		$('#char_build').val(this.skills_array.join());
 		if (this.avatar_level > 0)
-			history.replaceState(null, '', this.page_path + '#' + this.avatar_level + '-' + this.skills_array.join(','));
+			history.replaceState(null, '', this.page_path + '#' + this.current_hash());
 		this.update_summary();
 	},
 
