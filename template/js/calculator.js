@@ -250,7 +250,7 @@ var Calculator_box = {
 	},
 
 	copy_link: function() {
-		this._copy_text(window.location.href);
+		this._copy_text(window.location.href, '✓ Link copied!');
 	},
 
 	copy_summary: function() {
@@ -265,7 +265,7 @@ var Calculator_box = {
 			'DNA: ' + used_dna + '/' + this.total_points_dna + ' used\n' +
 			'Link: ' + window.location.href;
 
-		this._copy_text(text);
+		this._copy_text(text, '✓ Summary copied!');
 	},
 
 	copy_export: function() {
@@ -283,36 +283,39 @@ var Calculator_box = {
 		var text = '[Skills]\n' + (skillLines.length ? skillLines.join('\n') : '-') +
 			'\n\n[DNA]\n' + (dnaLines.length ? dnaLines.join('\n') : '-');
 
-		this._copy_text(text);
+		this._copy_text(text, '✓ Exported!');
 	},
 
-	_copy_text: function(text) {
+	_copy_text: function(text, message) {
 		var that = this;
 		this.close_copy_menu();
 		if (navigator.clipboard) {
 			navigator.clipboard.writeText(text).then(function() {
-				that._btn_feedback();
-			}).catch(function() { that._copy_fallback(text); });
+				that._btn_feedback(message);
+			}).catch(function() { that._copy_fallback(text, message); });
 		} else {
-			this._copy_fallback(text);
+			this._copy_fallback(text, message);
 		}
 	},
 
-	_btn_feedback: function() {
+	_btn_feedback: function(message) {
 		var btn = document.getElementById('calc_copy_btn');
 		if (!btn) return;
-		var original = btn.textContent;
-		btn.textContent = '✓ Copied';
-		setTimeout(function() { btn.textContent = original; }, 2000);
+		if (!this._copy_btn_original) this._copy_btn_original = btn.textContent;
+		var original = this._copy_btn_original;
+
+		if (this._copy_btn_timeout) clearTimeout(this._copy_btn_timeout);
+		btn.textContent = message;
+		this._copy_btn_timeout = setTimeout(function() { btn.textContent = original; }, 2000);
 	},
 
-	_copy_fallback: function(text) {
+	_copy_fallback: function(text, message) {
 		var ta = document.createElement('textarea');
 		ta.value = text;
 		ta.style.cssText = 'position:fixed;opacity:0';
 		document.body.appendChild(ta);
 		ta.select();
-		try { document.execCommand('copy'); this._btn_feedback(); } catch(e) {}
+		try { document.execCommand('copy'); this._btn_feedback(message); } catch(e) {}
 		document.body.removeChild(ta);
 	},
 
